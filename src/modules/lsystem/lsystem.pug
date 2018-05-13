@@ -1,0 +1,113 @@
+include ../../octicons.pug
+
+mixin form-row(label)
+  div.form-group.row
+    label.col-sm-3 #{ label }
+    div.col-sm-9
+      block
+
+mixin input-group-plus-minus(target, step)
+  div.input-group.input-group-plus-minus
+    block
+    div.input-group-append
+      button.btn.btn-outline-secondary(data-target=target, data-action="increment", data-step=step) +
+      button.btn.btn-outline-secondary(data-target=target, data-action="decrement", data-step=step) -
+
+h2 L-системы
+div.tab-content
+  div.tab-pane.fade.container.show.active#activity-tab-model
+    div.row
+      div.col-sm
+        h3 Фрактал
+        canvas#fractal-canvas.img-thumbnail(width="500" height="500")
+          | Ваш браузер не поддерживает canvas.
+      div.col-sm
+        h3 L-система
+        form#fractal-form
+          +form-row("Количество итераций:")
+            +input-group-plus-minus("#iterations-input", 1)
+              input#iterations-input.form-control.input-sm(type="number", name="iterations", min="0", max="15", value="1")
+          +form-row("Переменные:")
+            input#variables-input.form-control.input-sm(type="text", name="variables", value="A B")
+          +form-row("Константы:")
+            div.input-group
+              input#constants-input.form-control.input-sm(type="text", value="F b + - [ ]", disabled="true")
+          +form-row("Старт:")
+            input#start-input.form-control.input-sm(type="text", name="start")
+          div.form-group.row
+            label.col-sm-3 Правила:
+            div#rules-container.col-sm-9
+              - var n = 0;
+              while n < 5
+                div.row.mb-1
+                  div.col-sm-2.pr-0
+                    input.form-control.input-sm.rule-predecessor(type="text", value="F", disabled="true")
+                  div.col-sm-1.p-0
+                    +octicon-arrow-right
+                  div.col-sm-9.pl-0
+                    input.form-control.input-sm.rule-successor(type="text", value="F")
+                - n++
+          +form-row("Угол поворота:")
+            +input-group-plus-minus("#angle-input", 1)
+              input#angle-input.form-control.input-sm(name="angle", type="number", min="0", max="180", value="90")
+        div#slow-alert.alert.alert-warning
+          +octicon-alert
+          |
+          | Отрисовка этой системы займет много времени. Нажмите <strong>Сгенерировать фрактал</strong> чтобы продолжить.
+        button#draw-btn.btn.btn-primary.m-1
+          +octicon-sync
+          |
+          | Сгенерировать фрактал
+        div.dropdown.m-1
+          button.btn.btn-secondary.dropdown-toggle(data-toggle="dropdown")
+            +octicon-desktop-download
+            |
+            | Сохранить как
+          div.dropdown-menu
+            a#save-png-btn.dropdown-item(href="#") PNG
+            a#save-svg-btn.dropdown-item(href="#") SVG
+        div.dropdown.m-1
+          button.btn.btn-secondary.dropdown-toggle(data-toggle="dropdown")
+            | Примеры
+          div#presets-list.dropdown-menu
+    //- div.row
+      div.col
+        h3 Итерации
+        ol#steps.card
+
+  div.tab-pane.fade#activity-tab-code
+    h3 Редактировать JSON
+    div.container
+      div.row.mb-3
+        textarea#json-data.card(autocomplete="off", autocorrect="off", autocapitalize="off", spellcheck="false")
+      div.row.mb-3
+        button#save-json-btn.btn.btn-primary Сохранить
+
+  div.tab-pane.fade#activity-tab-help
+    <p>Для рисования L-систем на плоскости используется т.н. <a href="https://ru.wikipedia.org/wiki/Черепашья_графика">черепашья графика</a>.
+    <p>Чепепашка характеризуется координатами <em>x</em> и <em>y</em> на плоскости, а так же углом <em>&alpha;</em>, указывающим направление, куда она смотрит. Черепашка может поворачиваться на месте на фиксированный угол, делать шаг вперед (фиксированное расстояние) и прочерчивать за собой след.
+    <p>Система команд для управления черепашкой следующая:
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>F</td><td>сделать шаг вперед, нарисовав линию</td>
+        </tr>
+        <tr>
+          <td>d</td><td>сделать шаг вперед, не рисуя</td>
+        </tr>
+        <tr>
+          <td>+</td><td>повернуть по часовой стрелке</td>
+        </tr>
+        <tr>
+          <td>-</td><td>повернуть против часовой стрелки</td>
+        </tr>
+        <tr>
+          <td>[</td><td>запомнить текущее положение</td>
+        </tr>
+        <tr>
+          <td>]</td><td>восстаносить предыдущее положение</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Все другие буквы черепашкой игнорируются, однако на их место могут подставляться другие команды в последующих итерациях.
+    <p>

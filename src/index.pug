@@ -1,0 +1,45 @@
+include octicons.pug
+
+doctype html
+html(language="ru")
+head
+  title Chaos theory
+  meta(charset="utf-8")
+  meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+body
+  header
+    nav.navbar.navbar-light.bg-light.navbar-expand-md.justify-content-between.d-flex.flex-row.py-0
+      a.navbar-brand(href="#home")
+        span.icon.icon-32.icon-butterfly
+      div#activity-tabs-select.nav.nav-tabs.navbar-nav.align-self-end
+        a.nav-link.active(href="#activity-tab-model", data-toggle="tab") Модель
+        a.nav-link(href="#activity-tab-code", data-toggle="tab") Код
+        a.nav-link(href="#activity-tab-help", data-toggle="tab") Справка
+      div.navbar-nav.nav
+        //- TODO: localization
+        //- a.nav-link.nav-item.dropdown-toggle(href="#", data-toggle="dropdown") RU
+        //- div.dropdown-menu.dropdown-menu-right
+        //-   a.dropdown-item.active(href="#") RU
+        //-   a.dropdown-item.disabled(href="#") EN
+        a.nav-link.nav-item.mirror-x(href="#", title="Поделиться")
+          +octicon-reply
+        a.nav-link(href="https://github.com/3lo1i/chaos-theory/", title="GitHub")
+          +octicon-mark-github
+  main#activity-content.container
+    div.text-center Загрузка...
+    small.text-center Если вы видите этот текст и он не исчезает, значит что-то пошло не так.
+  aside.container.flex-column
+    form.sidebar-search-form
+      input.form-control(type="search" id="search-input" placeholder="Найти..." autocomplete="off" spellcheck="false")
+    nav#sidebar-filter-items.nav.flex-column.nav-pills
+      a.category-link.nav-link(href="#lsystem", data-search="l-системы фрактал l-system lindenmayer system fractal tree") L-системы
+      a.category-link.nav-link(href="#attractor", data-search="аттрактор лоренца странный lorenz system strange attractor") Аттрактор Лоренца
+      a.category-link.nav-link(href="#logisticmap", data-search="логистическое отображение logistic map") Логистическое отображение
+      a.category-link.nav-link(href="#lotka", data-search="модель лотки вольтерры lotka–volterra equations predator-prey equations хищник-жертва") Модель Лотки — Вольтерры
+  footer
+    div.text-center
+      small
+        a(href="https://github.com/3lo1i/chaos-theory/", title="GitHub")
+          +octicon-logo-github
+        a.ml-2(href="https://www.fatcow.com/free-icons") FatCow free Web Icons
+        a.ml-2(href="https://octicons.github.com/") GitHub Octicons

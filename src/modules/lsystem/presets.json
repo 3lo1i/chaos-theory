@@ -1,0 +1,246 @@
+[
+  {
+    "name": "Снежинка Коха",
+    "iterations": 5,
+    "start": "F++F++F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "F-F++F-F"
+      }
+    ],
+    "angle": 60
+  },
+  {
+    "name": "Кривая Коха",
+    "iterations": 4,
+    "start": "F-F++F-F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "F-F++F-F"
+      }
+    ],
+    "angle": 60
+  },
+  {
+    "name": "Кривая Минковского",
+    "iterations": 3,
+    "start": "F-F+F+FF-F-F+F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "F-F+F+FF-F-F+F"
+      }
+    ],
+    "angle": 90
+  },
+  {
+    "name": "Кривая Гильберта",
+    "iterations": 4,
+    "start": "A",
+    "rules": [
+      {
+        "predecessor": "A",
+        "successor": "-BF+AFA+FB-"
+      },
+      {
+        "predecessor": "B",
+        "successor": "+AF-BFB-FA+"
+      }
+    ],
+    "angle": 90
+  },
+  {
+    "name": "Кривая Леви",
+    "iterations": 15,
+    "start": "F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "-F++F-"
+      }
+    ],
+    "angle": 45
+  },
+  {
+    "name": "Дракон Хартера — Хейтуэя",
+    "iterations": 15,
+    "start": "FX",
+    "rules": [
+      {
+        "predecessor": "X",
+        "successor": "X+YF+"
+      },
+      {
+        "predecessor": "Y",
+        "successor": "-FX-Y"
+      }
+    ],
+    "angle": 90
+  },
+  {
+    "name": "Дерево Пифагора",
+    "iterations": 7,
+    "start": "--FX",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FF"
+      },
+      {
+        "predecessor": "X",
+        "successor": "[-FX][+FX]"
+      }
+    ],
+    "angle": 45
+  },
+  {
+    "name": "Множество Кантора",
+    "iterations": 3,
+    "start": "F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FbF"
+      },
+      {
+        "predecessor": "b",
+        "successor": "bbb"
+      }
+    ],
+    "angle": 90
+  },
+  {
+    "name": "Треугольник Серпинского",
+    "iterations": 4,
+    "start": "FXF--FF--FF",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FF"
+      },
+      {
+        "predecessor": "X",
+        "successor": "--FXF++FXF++FXF--"
+      }
+    ],
+    "angle": 60
+  },
+  {
+    "name": "Стреловидная кривая Серпинского",
+    "iterations": 9,
+    "start": "-FA",
+    "rules": [
+      {
+        "predecessor": "A",
+        "successor": "+FBF-FAF-FBF+"
+      },
+      {
+        "predecessor": "B",
+        "successor": "-FAF+FBF+FAF-"
+      }
+    ],
+    "angle": 60
+  },
+  {
+    "name": "Ковер Серпинского",
+    "iterations": 5,
+    "start": "FA",
+    "rules": [
+      {
+        "predecessor": "A",
+        "successor": "FA+FA-FA-FA-FG+FA+FA+FA-FA"
+      },
+      {
+        "predecessor": "G",
+        "successor": "FGFGFG"
+      }
+    ],
+    "angle": 90
+  },
+  {
+    "name": "Фрактальное растение 1",
+    "iterations": 6,
+    "start": "--X",
+    "rules": [
+      {
+        "predecessor": "X",
+        "successor": "F-[[X]+X]+F[+FX]-X"
+      },
+      {
+        "predecessor": "F",
+        "successor": "FF"
+      }
+    ],
+    "angle": 25
+  },
+  {
+    "name": "Фрактальное растение 2",
+    "iterations": 4,
+    "start": "--F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FF-[-F+F+F]+[+F-F-F]"
+      }
+    ],
+    "angle": 22
+  },
+  {
+    "name": "Фрактальное растение 3",
+    "iterations": 5,
+    "start": "---FX",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FF-[-F+F]+[+F-F]"
+      },
+      {
+        "predecessor": "X",
+        "successor": "FF+[+F]+[-F]"
+      }
+    ],
+    "angle": 25
+  },
+  {
+    "name": "Фрактальное растение 4",
+    "iterations": 5,
+    "start": "F",
+    "rules": [
+      {
+        "predecessor": "F",
+        "successor": "FF[-F++F][+F--F]++F--F"
+      }
+    ],
+    "angle": 27
+  },
+  {
+    "name": "Замощение Пенроуза",
+    "iterations": 3,
+    "start": "[X]++[X]++[X]++[X]++[X]",
+    "rules": [
+      {
+        "predecessor": "W",
+        "successor": "--ZF++++YF[+WF++++XF]--XF"
+      },
+      {
+        "predecessor": "X",
+        "successor": "+ZF--WF[---YF--XF]+"
+      },
+      {
+        "predecessor": "Y",
+        "successor": "ZF++WF----XF[-ZF----YF]++"
+      },
+      {
+        "predecessor": "Z",
+        "successor": "-YF++XF[+++ZF++WF]-"
+      },
+      {
+        "predecessor": "F",
+        "successor": ""
+      }
+    ],
+    "angle": 36
+  }
+]

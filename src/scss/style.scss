@@ -1,0 +1,69 @@
+@import "theme";
+@import "lsystem";
+@import "~bootstrap/scss/bootstrap";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 20% auto;
+  grid-template-rows: 3rem auto 3rem;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar content"
+    "sidebar footer";
+}
+
+body > aside {
+  grid-area: sidebar;
+}
+
+body > header {
+  grid-area: header;
+}
+
+body > footer {
+  grid-area: footer;
+}
+
+body > main {
+  grid-area: content;
+}
+
+.sidebar-search-form {
+  padding: 1rem 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+.octicon svg {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+  height: 1em;
+  width: auto;
+}
+
+.mirror-x {
+  transform: scale(-1, 1);
+}
+
+.icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-butterfly {
+  background-image: url('../img/favicon-32.png');
+}
