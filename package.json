@@ -2,6 +2,7 @@
   "name": "chaos-theory",
   "version": "1.0.0",
   "description": "Various web demos illustrating chaotic behaviour",
+  "homepage": "https://3lo1i.github.io/chaos-theory/",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -9,7 +10,8 @@
     "build": "npx webpack --config webpack.config.js",
     "watch": "npx webpack --config webpack.config.js --watch",
     "start": "webpack-dev-server --open",
-    "publish": "bash publish.sh"
+    "predeploy": "npm run build",
+    "deploy": "npx gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "favicons-webpack-plugin": "0.0.9",
     "file-loader": "^1.1.11",
+    "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.2.0",
     "jquery": "^3.3.1",
