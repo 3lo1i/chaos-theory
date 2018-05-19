@@ -3,6 +3,8 @@ import $ from 'jquery';
 
 console.log('attractor module has loaded');
 
+const title = 'Аттрактор Лоренца';
+
 const init = () => {
   console.log('attractor init');
   return $(template());
@@ -12,4 +14,4 @@ const destroy = () => {
   console.log('attractor destroyed');
 };
 
-export default { init, destroy };
+export default { title, init, destroy };

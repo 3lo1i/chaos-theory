@@ -176,16 +176,22 @@ class SVGDrawingTool extends AbstractDrawingTool {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lsystem_pug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lsystem.pug */ "./src/modules/lsystem/lsystem.pug");
-/* harmony import */ var _lsystem_pug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_lsystem_pug__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _drawingtool__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./drawingtool */ "./src/modules/lsystem/drawingtool.js");
-/* harmony import */ var _turtle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./turtle */ "./src/modules/lsystem/turtle.js");
-/* harmony import */ var _presets_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./presets.json */ "./src/modules/lsystem/presets.json");
-var _presets_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/Object.assign({}, _presets_json__WEBPACK_IMPORTED_MODULE_3__, {"default": _presets_json__WEBPACK_IMPORTED_MODULE_3__});
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! svg.js */ "./node_modules/svg.js/dist/svg.js");
-/* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(svg_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _templates_lsystem_pug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./templates/lsystem.pug */ "./src/modules/lsystem/templates/lsystem.pug");
+/* harmony import */ var _templates_lsystem_pug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_templates_lsystem_pug__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _templates_tabs_pug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./templates/tabs.pug */ "./src/modules/lsystem/templates/tabs.pug");
+/* harmony import */ var _templates_tabs_pug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_templates_tabs_pug__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _templates_presetitem_pug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templates/presetitem.pug */ "./src/modules/lsystem/templates/presetitem.pug");
+/* harmony import */ var _templates_presetitem_pug__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_templates_presetitem_pug__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _drawingtool__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./drawingtool */ "./src/modules/lsystem/drawingtool.js");
+/* harmony import */ var _turtle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./turtle */ "./src/modules/lsystem/turtle.js");
+/* harmony import */ var _presets_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./presets.json */ "./src/modules/lsystem/presets.json");
+var _presets_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/Object.assign({}, _presets_json__WEBPACK_IMPORTED_MODULE_5__, {"default": _presets_json__WEBPACK_IMPORTED_MODULE_5__});
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! svg.js */ "./node_modules/svg.js/dist/svg.js");
+/* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(svg_js__WEBPACK_IMPORTED_MODULE_7__);
+
+
 
 
 
@@ -194,6 +200,8 @@ var _presets_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/Object.a
 
 
 console.log('lsystem module has loaded');
+
+const title = 'L-системы';
 
 const MAX_RULES = 5;
 const TURTLE_STEP = 10;
@@ -204,9 +212,13 @@ const PNG_HEIGHT = 2048;
 const SVG_WIDTH = 2048;
 const SVG_HEIGHT = 2048;
 
+
 const init = () => {
   console.log('lsystem init');
-  const activity = jquery__WEBPACK_IMPORTED_MODULE_4___default()(_lsystem_pug__WEBPACK_IMPORTED_MODULE_0___default()());
+  const activity = jquery__WEBPACK_IMPORTED_MODULE_6___default()(_templates_lsystem_pug__WEBPACK_IMPORTED_MODULE_0___default()());
+
+  const tabs = jquery__WEBPACK_IMPORTED_MODULE_6___default()(_templates_tabs_pug__WEBPACK_IMPORTED_MODULE_1___default()());
+  jquery__WEBPACK_IMPORTED_MODULE_6___default()('#navbar-tabs-container').append(tabs);
 
   var path;
   var rules = [
@@ -215,8 +227,8 @@ const init = () => {
 
   const canvas = activity.find('#fractal-canvas').get(0);
   const context = canvas.getContext('2d');
-  const canvasDrawingTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_1__["DrawingTool"](canvas, context);
-  const turtle = new _turtle__WEBPACK_IMPORTED_MODULE_2__["default"]();
+  const canvasDrawingTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_3__["DrawingTool"](canvas, context);
+  const turtle = new _turtle__WEBPACK_IMPORTED_MODULE_4__["default"]();
 
   const getLSystemVariables = () => {
     const val = activity
@@ -262,7 +274,7 @@ const init = () => {
     activity
       .find('#rules-container .row')
       .each((index, el) => {
-        el = jquery__WEBPACK_IMPORTED_MODULE_4___default()(el);
+        el = jquery__WEBPACK_IMPORTED_MODULE_6___default()(el);
         if (index >= variables.length) {
           return false;
         }
@@ -281,7 +293,7 @@ const init = () => {
     rules = data.rules;
 
     return data;
-  }
+  };
 
   const deserializeForm = (data) => {
     activity.find('#angle-input').val(data.angle);
@@ -289,7 +301,7 @@ const init = () => {
     activity.find('#start-input').val(data.start);
     rules = data.rules.map((rule) => ({ predecessor: rule.predecessor, successor: rule.successor }));
     updateRules();
-  }
+  };
 
   const saveAs = (blob, filename) => {
     const anchor = document.createElement('a');
@@ -310,9 +322,9 @@ const init = () => {
   const savePNG = (event) => {
     const data = serializeForm();
 
-    const canvas = jquery__WEBPACK_IMPORTED_MODULE_4___default()(`<canvas width="${ PNG_WIDTH }" height="${ PNG_HEIGHT }"/>`).get(0);
+    const canvas = jquery__WEBPACK_IMPORTED_MODULE_6___default()(`<canvas width="${ PNG_WIDTH }" height="${ PNG_HEIGHT }"/>`).get(0);
     const context = canvas.getContext('2d');
-    const pngDrawingTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_1__["DrawingTool"](canvas, context);
+    const pngDrawingTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_3__["DrawingTool"](canvas, context);
 
     turtle.start(0, 0, 0);
     turtle.angleStep = data.angle;
@@ -323,14 +335,14 @@ const init = () => {
     if (event) {
       event.preventDefault();
     }
-  }
+  };
 
   const saveSVG = (event) => {
     const data = serializeForm();
     
-    const div = jquery__WEBPACK_IMPORTED_MODULE_4___default()('<div/>').get(0);
-    const draw = svg_js__WEBPACK_IMPORTED_MODULE_5___default()(div).size(SVG_WIDTH, SVG_HEIGHT);
-    const svgTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_1__["SVGDrawingTool"](draw);
+    const div = jquery__WEBPACK_IMPORTED_MODULE_6___default()('<div/>').get(0);
+    const draw = svg_js__WEBPACK_IMPORTED_MODULE_7___default()(div).size(SVG_WIDTH, SVG_HEIGHT);
+    const svgTool = new _drawingtool__WEBPACK_IMPORTED_MODULE_3__["SVGDrawingTool"](draw);
 
     turtle.start(0, 0, 0);
     turtle.angleStep = data.angle;
@@ -342,7 +354,7 @@ const init = () => {
     if (event) {
       event.preventDefault();
     }
-  }
+  };
 
   const getWord = (axiom, rules, force=false) => {
     let word = '';
@@ -365,7 +377,6 @@ const init = () => {
 
   const makeFractal = (data, force=false) => {
     let overflow = false;
-    console.log(data);
 
     path = data.start;
     // var stepsEl = activity.find('#steps');
@@ -394,7 +405,7 @@ const init = () => {
       activity.find('#slow-alert').hide();
     }
     drawPath();
-  }
+  };
 
 
   const drawPath = (event) => {
@@ -407,13 +418,13 @@ const init = () => {
     turtle.angleStep = serializeForm().angle;
     turtle.step = 10;
     turtle.drawPath(path, canvasDrawingTool);
-  }
+  };
 
 
   const onLSystemParamsChange = () => {
     const data = serializeForm();
     makeFractal(data, false);
-  }
+  };
 
   activity.find('#draw-btn').click(() => makeFractal(serializeForm(), true));
   activity.find('#save-png-btn').click(savePNG);
@@ -464,7 +475,7 @@ const init = () => {
       .find('#rules-container .row')
       .each((index, el) => {
         const rule = rules[index];
-        el = jquery__WEBPACK_IMPORTED_MODULE_4___default()(el);
+        el = jquery__WEBPACK_IMPORTED_MODULE_6___default()(el);
         if (rule) {
           const { predecessor, successor } = rule;
           el.show();
@@ -485,7 +496,7 @@ const init = () => {
     activity
       .find('#json-data')
       .val(JSON.stringify(serializeForm(), null, 2));
-  }
+  };
 
   // variables input handler
   activity
@@ -511,12 +522,24 @@ const init = () => {
     if (t.value.match(/[^A-Za-z\s\[\]\+\-]/g)) {
       t.value = t.value.replace(/[^A-Za-z\s\[\]\+\-]/g, '');
     }
-  }
+  };
 
   // start input handler
   activity
     .find('#start-input')
     .keyup(restrictInput);
+
+  // prevent form submit on enter
+  activity
+    .find('#fractal-form')
+    .on('keydown', (e) => {
+      if (e.keyCode == 13) {
+        if (e.target.tagName === 'INPUT') {
+          jquery__WEBPACK_IMPORTED_MODULE_6___default()(e.target).change();
+        }
+        e.preventDefault();
+      }
+    });
 
   // rules successor input handler
   activity
@@ -531,33 +554,17 @@ const init = () => {
       makeFractal(event.data.preset);
       event.preventDefault();
     };
-    _presets_json__WEBPACK_IMPORTED_MODULE_3__.forEach((preset, index) => {
-      const presetLink = jquery__WEBPACK_IMPORTED_MODULE_4___default()(`<a id="preset_${ index }" class="dropdown-item" data-preset="${ index }" href="#">${ preset.name }</a>`);
+    _presets_json__WEBPACK_IMPORTED_MODULE_5__.forEach((preset, index) => {
+      const name = preset.name;
+      const presetLink = jquery__WEBPACK_IMPORTED_MODULE_6___default()(_templates_presetitem_pug__WEBPACK_IMPORTED_MODULE_2___default()({ index, name }));
       presetLink.click({ preset }, loadPreset);
       activity.find('#presets-list').append(presetLink);
     });
   }
 
-  // activate +/- buttons for number inputs
-  jquery__WEBPACK_IMPORTED_MODULE_4___default()(activity).on('click', '.btn[data-action]', (event) => {
-    const { target, action, step } = event.target.dataset;
-    const input = jquery__WEBPACK_IMPORTED_MODULE_4___default()(target);
-    const min = parseInt(input.attr('min'));
-    const max = parseInt(input.attr('max'));
-    const val = parseInt(input.val());
-    const stp = parseInt(step);
-    if (action === 'increment') {
-      input.val(Math.min(val + stp, max));
-    } else if (action === 'decrement') {
-      input.val(Math.max(val - stp, min));
-    }
-    input.change();
-    event.preventDefault();
-  });
-
   // load initial lsystem and draw it
   {
-    const data = _presets_json__WEBPACK_IMPORTED_MODULE_3__[0];
+    const data = _presets_json__WEBPACK_IMPORTED_MODULE_5__[0];
     deserializeForm(data);
     makeFractal(data);
   }
@@ -567,22 +574,34 @@ const init = () => {
 
 const destroy = () => {
   console.log('lsystem destroyed');
+
+  jquery__WEBPACK_IMPORTED_MODULE_6___default()('#lsystem-tabs-select').remove();
 };
 
-/* harmony default export */ __webpack_exports__["default"] = ({ init, destroy });
-
+/* harmony default export */ __webpack_exports__["default"] = ({ title, init, destroy });
 
 
 /***/ }),
 
-/***/ "./src/modules/lsystem/lsystem.pug":
-/*!*****************************************!*\
-  !*** ./src/modules/lsystem/lsystem.pug ***!
-  \*****************************************/
+/***/ "./src/modules/lsystem/presets.json":
+/*!******************************************!*\
+  !*** ./src/modules/lsystem/presets.json ***!
+  \******************************************/
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, default */
+/***/ (function(module) {
+
+module.exports = [{"name":"Снежинка Коха","iterations":5,"start":"F++F++F","rules":[{"predecessor":"F","successor":"F-F++F-F"}],"angle":60},{"name":"Кривая Коха","iterations":4,"start":"F-F++F-F","rules":[{"predecessor":"F","successor":"F-F++F-F"}],"angle":60},{"name":"Кривая Минковского","iterations":3,"start":"F-F+F+FF-F-F+F","rules":[{"predecessor":"F","successor":"F-F+F+FF-F-F+F"}],"angle":90},{"name":"Кривая Гильберта","iterations":4,"start":"A","rules":[{"predecessor":"A","successor":"-BF+AFA+FB-"},{"predecessor":"B","successor":"+AF-BFB-FA+"}],"angle":90},{"name":"Кривая Леви","iterations":15,"start":"F","rules":[{"predecessor":"F","successor":"-F++F-"}],"angle":45},{"name":"Дракон Хартера — Хейтуэя","iterations":15,"start":"FX","rules":[{"predecessor":"X","successor":"X+YF+"},{"predecessor":"Y","successor":"-FX-Y"}],"angle":90},{"name":"Дерево Пифагора","iterations":7,"start":"--FX","rules":[{"predecessor":"F","successor":"FF"},{"predecessor":"X","successor":"[-FX][+FX]"}],"angle":45},{"name":"Множество Кантора","iterations":3,"start":"F","rules":[{"predecessor":"F","successor":"FbF"},{"predecessor":"b","successor":"bbb"}],"angle":90},{"name":"Треугольник Серпинского","iterations":4,"start":"FXF--FF--FF","rules":[{"predecessor":"F","successor":"FF"},{"predecessor":"X","successor":"--FXF++FXF++FXF--"}],"angle":60},{"name":"Стреловидная кривая Серпинского","iterations":9,"start":"-FA","rules":[{"predecessor":"A","successor":"+FBF-FAF-FBF+"},{"predecessor":"B","successor":"-FAF+FBF+FAF-"}],"angle":60},{"name":"Ковер Серпинского","iterations":5,"start":"FA","rules":[{"predecessor":"A","successor":"FA+FA-FA-FA-FG+FA+FA+FA-FA"},{"predecessor":"G","successor":"FGFGFG"}],"angle":90},{"name":"Фрактальное растение 1","iterations":6,"start":"--X","rules":[{"predecessor":"X","successor":"F-[[X]+X]+F[+FX]-X"},{"predecessor":"F","successor":"FF"}],"angle":25},{"name":"Фрактальное растение 2","iterations":4,"start":"--F","rules":[{"predecessor":"F","successor":"FF-[-F+F+F]+[+F-F-F]"}],"angle":22},{"name":"Фрактальное растение 3","iterations":5,"start":"---FX","rules":[{"predecessor":"F","successor":"FF-[-F+F]+[+F-F]"},{"predecessor":"X","successor":"FF+[+F]+[-F]"}],"angle":25},{"name":"Фрактальное растение 4","iterations":5,"start":"F","rules":[{"predecessor":"F","successor":"FF[-F++F][+F--F]++F--F"}],"angle":27},{"name":"Замощение Пенроуза","iterations":3,"start":"[X]++[X]++[X]++[X]++[X]","rules":[{"predecessor":"W","successor":"--ZF++++YF[+WF++++XF]--XF"},{"predecessor":"X","successor":"+ZF--WF[---YF--XF]+"},{"predecessor":"Y","successor":"ZF++WF----XF[-ZF----YF]++"},{"predecessor":"Z","successor":"-YF++XF[+++ZF++WF]-"},{"predecessor":"F","successor":""}],"angle":36}];
+
+/***/ }),
+
+/***/ "./src/modules/lsystem/templates/lsystem.pug":
+/*!***************************************************!*\
+  !*** ./src/modules/lsystem/templates/lsystem.pug ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(/*! ../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
+var pug = __webpack_require__(/*! ../../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["octicon-alert"] = pug_interp = function(){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -1300,7 +1319,7 @@ pug_html = pug_html + "\u003Cdiv class=\"input-group input-group-plus-minus\"\u0
 block && block();
 pug_html = pug_html + "\u003Cdiv class=\"input-group-append\"\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"increment\""+pug.attr("data-step", step, true, true)) + "\u003E+\u003C\u002Fbutton\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"decrement\""+pug.attr("data-step", step, true, true)) + "\u003E-\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 };
-pug_html = pug_html + "\u003Ch2\u003EL-системы\u003C\u002Fh2\u003E\u003Cdiv class=\"tab-content\"\u003E\u003Cdiv class=\"tab-pane fade container show active\" id=\"activity-tab-model\"\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"col-sm\"\u003E\u003Ch3\u003EФрактал\u003C\u002Fh3\u003E\u003Ccanvas class=\"img-thumbnail\" id=\"fractal-canvas\" width=\"500\" height=\"500\"\u003EВаш браузер не поддерживает canvas.\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-sm\"\u003E\u003Ch3\u003EL-система\u003C\u002Fh3\u003E\u003Cform id=\"fractal-form\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"tab-content\"\u003E\u003Cdiv class=\"tab-pane fade container show active\" id=\"activity-tab-model\"\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Ccanvas class=\"img-thumbnail\" id=\"fractal-canvas\" width=\"500\" height=\"500\"\u003EВаш браузер не поддерживает canvas.\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Cform id=\"fractal-form\"\u003E";
 pug_mixins["form-row"].call({
 block: function(){
 pug_mixins["input-group-plus-minus"].call({
@@ -1354,14 +1373,31 @@ module.exports = template;
 
 /***/ }),
 
-/***/ "./src/modules/lsystem/presets.json":
-/*!******************************************!*\
-  !*** ./src/modules/lsystem/presets.json ***!
-  \******************************************/
-/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, default */
-/***/ (function(module) {
+/***/ "./src/modules/lsystem/templates/presetitem.pug":
+/*!******************************************************!*\
+  !*** ./src/modules/lsystem/templates/presetitem.pug ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = [{"name":"Снежинка Коха","iterations":5,"start":"F++F++F","rules":[{"predecessor":"F","successor":"F-F++F-F"}],"angle":60},{"name":"Кривая Коха","iterations":4,"start":"F-F++F-F","rules":[{"predecessor":"F","successor":"F-F++F-F"}],"angle":60},{"name":"Кривая Минковского","iterations":3,"start":"F-F+F+FF-F-F+F","rules":[{"predecessor":"F","successor":"F-F+F+FF-F-F+F"}],"angle":90},{"name":"Кривая Гильберта","iterations":4,"start":"A","rules":[{"predecessor":"A","successor":"-BF+AFA+FB-"},{"predecessor":"B","successor":"+AF-BFB-FA+"}],"angle":90},{"name":"Кривая Леви","iterations":15,"start":"F","rules":[{"predecessor":"F","successor":"-F++F-"}],"angle":45},{"name":"Дракон Хартера — Хейтуэя","iterations":15,"start":"FX","rules":[{"predecessor":"X","successor":"X+YF+"},{"predecessor":"Y","successor":"-FX-Y"}],"angle":90},{"name":"Дерево Пифагора","iterations":7,"start":"--FX","rules":[{"predecessor":"F","successor":"FF"},{"predecessor":"X","successor":"[-FX][+FX]"}],"angle":45},{"name":"Множество Кантора","iterations":3,"start":"F","rules":[{"predecessor":"F","successor":"FbF"},{"predecessor":"b","successor":"bbb"}],"angle":90},{"name":"Треугольник Серпинского","iterations":4,"start":"FXF--FF--FF","rules":[{"predecessor":"F","successor":"FF"},{"predecessor":"X","successor":"--FXF++FXF++FXF--"}],"angle":60},{"name":"Стреловидная кривая Серпинского","iterations":9,"start":"-FA","rules":[{"predecessor":"A","successor":"+FBF-FAF-FBF+"},{"predecessor":"B","successor":"-FAF+FBF+FAF-"}],"angle":60},{"name":"Ковер Серпинского","iterations":5,"start":"FA","rules":[{"predecessor":"A","successor":"FA+FA-FA-FA-FG+FA+FA+FA-FA"},{"predecessor":"G","successor":"FGFGFG"}],"angle":90},{"name":"Фрактальное растение 1","iterations":6,"start":"--X","rules":[{"predecessor":"X","successor":"F-[[X]+X]+F[+FX]-X"},{"predecessor":"F","successor":"FF"}],"angle":25},{"name":"Фрактальное растение 2","iterations":4,"start":"--F","rules":[{"predecessor":"F","successor":"FF-[-F+F+F]+[+F-F-F]"}],"angle":22},{"name":"Фрактальное растение 3","iterations":5,"start":"---FX","rules":[{"predecessor":"F","successor":"FF-[-F+F]+[+F-F]"},{"predecessor":"X","successor":"FF+[+F]+[-F]"}],"angle":25},{"name":"Фрактальное растение 4","iterations":5,"start":"F","rules":[{"predecessor":"F","successor":"FF[-F++F][+F--F]++F--F"}],"angle":27},{"name":"Замощение Пенроуза","iterations":3,"start":"[X]++[X]++[X]++[X]++[X]","rules":[{"predecessor":"W","successor":"--ZF++++YF[+WF++++XF]--XF"},{"predecessor":"X","successor":"+ZF--WF[---YF--XF]+"},{"predecessor":"Y","successor":"ZF++WF----XF[-ZF----YF]++"},{"predecessor":"Z","successor":"-YF++XF[+++ZF++WF]-"},{"predecessor":"F","successor":""}],"angle":36}];
+var pug = __webpack_require__(/*! ../../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (name) {pug_html = pug_html + "\u003Ca class=\"dropdown-item\" id=\"preset_#{ index }\" data-preset=\"#{ index }\" href=\"#\"\u003E" + (pug.escape(null == (pug_interp = name) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";}.call(this,"name" in locals_for_with?locals_for_with.name:typeof name!=="undefined"?name:undefined));;return pug_html;};
+module.exports = template;
+
+/***/ }),
+
+/***/ "./src/modules/lsystem/templates/tabs.pug":
+/*!************************************************!*\
+  !*** ./src/modules/lsystem/templates/tabs.pug ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(/*! ../../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"nav nav-tabs navbar-nav align-self-end\" id=\"lsystem-tabs-select\"\u003E\u003Ca class=\"nav-link active\" href=\"#activity-tab-model\" data-toggle=\"tab\"\u003EМодель\u003C\u002Fa\u003E\u003Ca class=\"nav-link\" href=\"#activity-tab-code\" data-toggle=\"tab\"\u003EКод\u003C\u002Fa\u003E\u003Ca class=\"nav-link\" href=\"#activity-tab-help\" data-toggle=\"tab\"\u003EСправка\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+module.exports = template;
 
 /***/ }),
 

@@ -1,4 +1,6 @@
-import template from './lsystem.pug';
+import template from './templates/lsystem.pug';
+import tabsTemplate from './templates/tabs.pug';
+import presetTemplate from './templates/presetitem.pug';
 import { DrawingTool, SVGDrawingTool } from './drawingtool';
 import Turtle from './turtle';
 import presets from './presets.json';
@@ -6,6 +8,8 @@ import $ from 'jquery';
 import SVG from 'svg.js';
 
 console.log('lsystem module has loaded');
+
+const title = 'L-системы';
 
 const MAX_RULES = 5;
 const TURTLE_STEP = 10;
@@ -16,9 +20,13 @@ const PNG_HEIGHT = 2048;
 const SVG_WIDTH = 2048;
 const SVG_HEIGHT = 2048;
 
+
 const init = () => {
   console.log('lsystem init');
   const activity = $(template());
+
+  const tabs = $(tabsTemplate());
+  $('#navbar-tabs-container').append(tabs);
 
   var path;
   var rules = [
@@ -93,7 +101,7 @@ const init = () => {
     rules = data.rules;
 
     return data;
-  }
+  };
 
   const deserializeForm = (data) => {
     activity.find('#angle-input').val(data.angle);
@@ -101,7 +109,7 @@ const init = () => {
     activity.find('#start-input').val(data.start);
     rules = data.rules.map((rule) => ({ predecessor: rule.predecessor, successor: rule.successor }));
     updateRules();
-  }
+  };
 
   const saveAs = (blob, filename) => {
     const anchor = document.createElement('a');
@@ -135,7 +143,7 @@ const init = () => {
     if (event) {
       event.preventDefault();
     }
-  }
+  };
 
   const saveSVG = (event) => {
     const data = serializeForm();
@@ -154,7 +162,7 @@ const init = () => {
     if (event) {
       event.preventDefault();
     }
-  }
+  };
 
   const getWord = (axiom, rules, force=false) => {
     let word = '';
@@ -177,7 +185,6 @@ const init = () => {
 
   const makeFractal = (data, force=false) => {
     let overflow = false;
-    console.log(data);
 
     path = data.start;
     // var stepsEl = activity.find('#steps');
@@ -206,7 +213,7 @@ const init = () => {
       activity.find('#slow-alert').hide();
     }
     drawPath();
-  }
+  };
 
 
   const drawPath = (event) => {
@@ -219,13 +226,13 @@ const init = () => {
     turtle.angleStep = serializeForm().angle;
     turtle.step = 10;
     turtle.drawPath(path, canvasDrawingTool);
-  }
+  };
 
 
   const onLSystemParamsChange = () => {
     const data = serializeForm();
     makeFractal(data, false);
-  }
+  };
 
   activity.find('#draw-btn').click(() => makeFractal(serializeForm(), true));
   activity.find('#save-png-btn').click(savePNG);
@@ -297,7 +304,7 @@ const init = () => {
     activity
       .find('#json-data')
       .val(JSON.stringify(serializeForm(), null, 2));
-  }
+  };
 
   // variables input handler
   activity
@@ -323,12 +330,24 @@ const init = () => {
     if (t.value.match(/[^A-Za-z\s\[\]\+\-]/g)) {
       t.value = t.value.replace(/[^A-Za-z\s\[\]\+\-]/g, '');
     }
-  }
+  };
 
   // start input handler
   activity
     .find('#start-input')
     .keyup(restrictInput);
+
+  // prevent form submit on enter
+  activity
+    .find('#fractal-form')
+    .on('keydown', (e) => {
+      if (e.keyCode == 13) {
+        if (e.target.tagName === 'INPUT') {
+          $(e.target).change();
+        }
+        e.preventDefault();
+      }
+    });
 
   // rules successor input handler
   activity
@@ -344,28 +363,12 @@ const init = () => {
       event.preventDefault();
     };
     presets.forEach((preset, index) => {
-      const presetLink = $(`<a id="preset_${ index }" class="dropdown-item" data-preset="${ index }" href="#">${ preset.name }</a>`);
+      const name = preset.name;
+      const presetLink = $(presetTemplate({ index, name }));
       presetLink.click({ preset }, loadPreset);
       activity.find('#presets-list').append(presetLink);
     });
   }
-
-  // activate +/- buttons for number inputs
-  $(activity).on('click', '.btn[data-action]', (event) => {
-    const { target, action, step } = event.target.dataset;
-    const input = $(target);
-    const min = parseInt(input.attr('min'));
-    const max = parseInt(input.attr('max'));
-    const val = parseInt(input.val());
-    const stp = parseInt(step);
-    if (action === 'increment') {
-      input.val(Math.min(val + stp, max));
-    } else if (action === 'decrement') {
-      input.val(Math.max(val - stp, min));
-    }
-    input.change();
-    event.preventDefault();
-  });
 
   // load initial lsystem and draw it
   {
@@ -379,7 +382,8 @@ const init = () => {
 
 const destroy = () => {
   console.log('lsystem destroyed');
+
+  $('#lsystem-tabs-select').remove();
 };
 
-export default { init, destroy };
-
+export default { title, init, destroy };

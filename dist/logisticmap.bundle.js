@@ -18,6 +18,8 @@ __webpack_require__.r(__webpack_exports__);
 
 console.log('logisticmap module has loaded');
 
+const title = 'Логистическое отображение';
+
 const init = () => {
   console.log('logisticmap init');
   return jquery__WEBPACK_IMPORTED_MODULE_1___default()(_logisticmap_pug__WEBPACK_IMPORTED_MODULE_0___default()());
@@ -27,7 +29,7 @@ const destroy = () => {
   console.log('logisticmap destroyed');
 };
 
-/* harmony default export */ __webpack_exports__["default"] = ({ init, destroy });
+/* harmony default export */ __webpack_exports__["default"] = ({ title, init, destroy });
 
 
 /***/ }),
@@ -41,7 +43,7 @@ const destroy = () => {
 
 var pug = __webpack_require__(/*! ../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Ch2\u003EЛогистическое отображение\u003C\u002Fh2\u003E\u003Cdiv\u003ETBD\u003C\u002Fdiv\u003E";;return pug_html;};
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv\u003ETBD\u003C\u002Fdiv\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ })

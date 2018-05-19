@@ -9,19 +9,18 @@ head
 body
   header
     nav.navbar.navbar-light.bg-light.navbar-expand-md.justify-content-between.d-flex.flex-row.py-0
-      a.navbar-brand(href="#home")
-        span.icon.icon-32.icon-butterfly
-      div#activity-tabs-select.nav.nav-tabs.navbar-nav.align-self-end
-        a.nav-link.active(href="#activity-tab-model", data-toggle="tab") Модель
-        a.nav-link(href="#activity-tab-code", data-toggle="tab") Код
-        a.nav-link(href="#activity-tab-help", data-toggle="tab") Справка
+      div
+        a.navbar-brand(href="#home")
+          span.icon.icon-32.icon-butterfly
+        a#activity-selector.navbar-brand(href="#") Выберите категорию:
+      div#navbar-tabs-container
       div.navbar-nav.nav
         //- TODO: localization
         //- a.nav-link.nav-item.dropdown-toggle(href="#", data-toggle="dropdown") RU
         //- div.dropdown-menu.dropdown-menu-right
         //-   a.dropdown-item.active(href="#") RU
         //-   a.dropdown-item.disabled(href="#") EN
-        a.nav-link.nav-item.mirror-x(href="#", title="Поделиться")
+        //- a.nav-link.nav-item.mirror-x(href="#", title="Поделиться")
           +octicon-reply
         a.nav-link(href="https://github.com/3lo1i/chaos-theory/", title="GitHub")
           +octicon-mark-github

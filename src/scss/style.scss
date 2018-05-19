@@ -8,10 +8,10 @@ html, body {
 
 body {
   display: grid;
-  grid-template-columns: 20% auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 3rem auto 3rem;
   grid-template-areas:
-    "sidebar header"
+    "header header"
     "sidebar content"
     "sidebar footer";
 }
@@ -30,6 +30,7 @@ body > footer {
 
 body > main {
   grid-area: content;
+  padding: 1rem;
 }
 
 .sidebar-search-form {

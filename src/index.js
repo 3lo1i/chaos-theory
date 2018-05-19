@@ -30,19 +30,14 @@ const changeActivity = (() => {
     if (loadedModule) {
       activities[activityName] = loadedModule.default;
     }
+    const activity = activities[activityName];
     // clear all main's content and populate with activity's content
     $('#activity-content').empty();
-    $('#activity-content').append(activities[activityName].init());
+    $('#activity-content').append(activity.init());
     // show currently selected activity link as active
     $(`.category-link:not([href="#${ activityName }"])`).removeClass('active');
     $(`.category-link[href="#${ activityName }"]`).addClass('active');
-    // always set current tab to 'model'
-    $('#activity-tabs-select a[href="#activity-tab-model"]').tab('show');
-    // disable tabs if there is no content to show
-    $('#activity-tabs-select a[href="#activity-tab-code"]')
-      .toggleClass('disabled', !$('#activity-tab-code').length);
-    $('#activity-tabs-select a[href="#activity-tab-help"]')
-      .toggleClass('disabled', !$('#activity-tab-help').length);
+    $('#activity-selector').text(activity.title);
   };
   return (activityName, force = false) => {    
     if (!activities.hasOwnProperty(activityName)) {
@@ -117,6 +112,31 @@ const init = () => {
       .filter((index, item) => !searchTerm.test(item.dataset.search))
       .hide();
   });
+
+  // activate +/- buttons for number inputs
+  $(document)
+    .on('click', '.btn[data-action="increment"], .btn[data-action="decrement"]',
+      (event) => {
+        const { target, action, step } = event.target.dataset;
+        const input = $(target);
+        const min = parseInt(input.attr('min'));
+        const max = parseInt(input.attr('max'));
+        const val = parseInt(input.val());
+        const stp = parseInt(step);
+        if (action === 'increment') {
+          input.val(Math.min(val + stp, max));
+        } else if (action === 'decrement') {
+          input.val(Math.max(val - stp, min));
+        }
+        input.change();
+        event.preventDefault();
+      }
+    );
+
+  $('#activity-selector').click((e) => {
+    $('#search-input').focus();
+    e.preventDefault();
+  })
   // set active page based on current hash
   updateActivity();
 };
