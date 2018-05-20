@@ -6,6 +6,7 @@ import Turtle from './turtle';
 import presets from './presets.json';
 import $ from 'jquery';
 import SVG from 'svg.js';
+import { saveCanvas, saveBlob } from '../../utils/save-utils';
 
 console.log('lsystem module has loaded');
 
@@ -111,22 +112,6 @@ const init = () => {
     updateRules();
   };
 
-  const saveAs = (blob, filename) => {
-    const anchor = document.createElement('a');
-    const dataUrl  = URL.createObjectURL(blob);
-    anchor.setAttribute('href', dataUrl);
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('download', filename);
-    if (document.createEvent) {
-      const evtObj = document.createEvent('MouseEvents');
-      evtObj.initEvent('click', true, true);
-      anchor.dispatchEvent(evtObj);
-    }
-    else if (anchor.click) {
-      anchor.click();
-    }
-  };
-
   const savePNG = (event) => {
     const data = serializeForm();
 
@@ -139,7 +124,7 @@ const init = () => {
     turtle.step = TURTLE_STEP;
     turtle.drawPath(path, pngDrawingTool);
 
-    canvas.toBlob((blob) => saveAs(blob, 'fractal.png'), 'image/png');
+    saveCanvas('fractal.png', canvas);
     if (event) {
       event.preventDefault();
     }
@@ -158,7 +143,7 @@ const init = () => {
     turtle.drawPath(path, svgTool);
 
     const blob = new Blob([draw.svg()], {type: 'image/svg+xml'});
-    saveAs(blob, 'fractal.svg');
+    saveBlob('fractal.svg', blob);
     if (event) {
       event.preventDefault();
     }

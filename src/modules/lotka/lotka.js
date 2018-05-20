@@ -1,6 +1,7 @@
 import template from './lotka.pug';
 import $ from 'jquery';
 import Chart from 'chart.js';
+import { saveChart } from '../../utils/save-utils';
 
 console.log('lotka module has loaded');
 
@@ -101,35 +102,8 @@ const init = () => {
     updateLotkaChart();
   });
 
-  const saveImage = (filename, dataUrl) => {
-    const anchor = document.createElement('a');
-    anchor.setAttribute('href', dataUrl);
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('download', filename);
-    if (document.createEvent) {
-      const evtObj = document.createEvent('MouseEvents');
-      evtObj.initEvent('click', true, true);
-      anchor.dispatchEvent(evtObj);
-    } else if (anchor.click) {
-      anchor.click();
-    }
-  };
-
-  const saveChart = (chart, filename, width = 1000, height = 800) => {
-    const oldStyle = chart.canvas.parentNode.style;
-    const oldClass = chart.canvas.parentNode.className;
-    chart.canvas.parentNode.style.width = `${width}px`;
-    chart.canvas.parentNode.style.height = `${height}px`;
-    chart.canvas.parentNode.className = '';
-    chart.resize();
-    chart.render();
-    const dataUrl = chart.toBase64Image('image/png');
-    saveImage(filename, dataUrl);
-    chart.canvas.parentNode.style = oldStyle;
-    chart.canvas.parentNode.className = oldClass;
-  };
   activity.find('#save-chart-btn').click((e) => {
-    saveChart(lotkaChart, 'preadator-prey.png');
+    saveChart(lotkaChart, 'preadator-prey.png', 1000, 800);
     e.preventDefault();
   });
 

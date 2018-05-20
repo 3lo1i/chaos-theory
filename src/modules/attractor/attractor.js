@@ -1,5 +1,6 @@
 import template from './attractor.pug';
 import $ from 'jquery';
+import { saveCanvas } from '../../utils/save-utils';
 
 console.log('attractor module has loaded');
 
@@ -81,23 +82,8 @@ const init = () => {
 
   drawAttractor(context, w, h, data);
 
-  const saveAs = (dataUrl, filename) => {
-    const anchor = document.createElement('a');
-    anchor.setAttribute('href', dataUrl);
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('download', filename);
-    if (document.createEvent) {
-      const evtObj = document.createEvent('MouseEvents');
-      evtObj.initEvent('click', true, true);
-      anchor.dispatchEvent(evtObj);
-    }
-    else if (anchor.click) {
-      anchor.click();
-    }
-  };
-
   activity.find('#save-png-btn').click((e) => {
-    saveAs(canvas[0].toDataURL(), 'attractor.png');
+    saveCanvas('attractor.png', canvas[0]);
     e.preventDefault();
   });
 
