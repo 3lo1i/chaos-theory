@@ -1,0 +1,9 @@
+include ./components/number-input/number.pug
+include ./components/slider-input/slider.pug
+include ./octicons.pug
+
+mixin form-row(label)
+  div.form-group.row
+    label.col-md-3 #{ label }
+    div.col-md-8
+      block

@@ -6,6 +6,8 @@ import $ from 'jquery';
 // import lotka from './modules/lotka/lotka';
 // import lsystem from './modules/lsystem/lsystem';
 import home from './modules/home/home';
+import initNumberInputs from './components/number-input/number';
+import initSliderInputs from './components/slider-input/slider';
 
 
 // activities are independent modules that populate page's main content.
@@ -113,30 +115,13 @@ const init = () => {
       .hide();
   });
 
-  // activate +/- buttons for number inputs
-  $(document)
-    .on('click', '.btn[data-action="increment"], .btn[data-action="decrement"]',
-      (event) => {
-        const { target, action, step } = event.target.dataset;
-        const input = $(target);
-        const min = parseInt(input.attr('min'));
-        const max = parseInt(input.attr('max'));
-        const val = parseInt(input.val());
-        const stp = parseInt(step);
-        if (action === 'increment') {
-          input.val(Math.min(val + stp, max));
-        } else if (action === 'decrement') {
-          input.val(Math.max(val - stp, min));
-        }
-        input.change();
-        event.preventDefault();
-      }
-    );
+  initNumberInputs();
+  initSliderInputs();
 
   $('#activity-selector').click((e) => {
     $('#search-input').focus();
     e.preventDefault();
-  })
+  });
   // set active page based on current hash
   updateActivity();
 };

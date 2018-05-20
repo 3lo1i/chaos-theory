@@ -337,18 +337,6 @@ const init = () => {
     .find('#start-input')
     .keyup(restrictInput);
 
-  // prevent form submit on enter
-  activity
-    .find('#fractal-form')
-    .on('keydown', (e) => {
-      if (e.keyCode == 13) {
-        if (e.target.tagName === 'INPUT') {
-          $(e.target).change();
-        }
-        e.preventDefault();
-      }
-    });
-
   // rules successor input handler
   activity
     .find('#rules-container .rule-successor')

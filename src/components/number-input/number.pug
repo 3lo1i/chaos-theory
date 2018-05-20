@@ -1,0 +1,11 @@
+mixin numberInput(variable, param_id, min, max, step, value)
+  - var id = `${param_id}-input`
+  - var target = `#${id}`
+  div.input-group.input-group-plus-minus
+    if (variable)
+      div.input-group-prepend.col-2.col-md-1.pr-0
+        span.input-group-text.w-100!= variable
+    input.form-control.input-sm(type="number", id=id, name=param_id, min=min, max=max, step=step, value=value, data-param=param_id)
+    div.input-group-append.pl-0.pr-3
+      button.btn.btn-outline-secondary(data-target=target, data-action="increment", data-step=step) +
+      button.btn.btn-outline-secondary(data-target=target, data-action="decrement", data-step=step) -

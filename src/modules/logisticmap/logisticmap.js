@@ -307,10 +307,9 @@ const init = () => {
 
 
   activity.find('input[data-param]').on('input', (e) => {
-    const input = $(e.target);
     const { param } = e.target.dataset;
+    const input = $(e.target);
     data[param] = parseFloat(input.val());
-    $(`[data-bind="${ param }"]`).text(input.val());
     update();
     if (param === 'm') {
       updateBifurcation();

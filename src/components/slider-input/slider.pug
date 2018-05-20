@@ -1,0 +1,10 @@
+mixin sliderInput(variable, param_id, min, max, step, value)
+  - var id = `${param_id}-input`
+  div.input-group
+    if (variable)
+      div.input-group-prepend.col-2.col-md-1.pr-0
+        span.input-group-text.w-100!= variable
+    div.form-control.col
+      input.form-control(type="range", id=id, name=param_id, min=min, max=max, step=step, value=value, data-param=param_id)
+    div.input-group-append.col-2.col-md-1.pl-0
+      span.input-group-text.w-100(data-bind=param_id) #{value}

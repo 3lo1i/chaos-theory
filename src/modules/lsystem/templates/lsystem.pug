@@ -1,17 +1,4 @@
-include ../../../octicons.pug
-
-mixin form-row(label)
-  div.form-group.row
-    label.col-sm-3 #{ label }
-    div.col-sm-9
-      block
-
-mixin input-group-plus-minus(target, step)
-  div.input-group.input-group-plus-minus
-    block
-    div.input-group-append
-      button.btn.btn-outline-secondary(data-target=target, data-action="increment", data-step=step) +
-      button.btn.btn-outline-secondary(data-target=target, data-action="decrement", data-step=step) -
+include ../../../mixins.pug
 
 div.tab-content
   div.tab-pane.fade.container.show.active#activity-tab-model
@@ -22,13 +9,11 @@ div.tab-content
       div.col-12.col-lg-6
         form#fractal-form
           +form-row("Количество итераций:")
-            +input-group-plus-minus("#iterations-input", 1)
-              input#iterations-input.form-control.input-sm(type="number", name="iterations", min="0", max="15", value="1")
+            +numberInput('', 'iterations', 0, 15, 1, 1)
           +form-row("Переменные:")
             input#variables-input.form-control.input-sm(type="text", name="variables", value="A B")
           +form-row("Константы:")
-            div.input-group
-              input#constants-input.form-control.input-sm(type="text", value="F b + - [ ]", disabled="true")
+            input#constants-input.form-control.input-sm(type="text", value="F b + - [ ]", disabled="true")
           +form-row("Старт:")
             input#start-input.form-control.input-sm(type="text", name="start")
           div.form-group.row
@@ -45,8 +30,7 @@ div.tab-content
                     input.form-control.input-sm.rule-successor(type="text", value="F")
                 - n++
           +form-row("Угол поворота:")
-            +input-group-plus-minus("#angle-input", 1)
-              input#angle-input.form-control.input-sm(name="angle", type="number", min="0", max="180", value="90")
+            +numberInput('', 'angle', 0, 180, 1, 90)
         div#slow-alert.alert.alert-warning
           +octicon-alert
           |
