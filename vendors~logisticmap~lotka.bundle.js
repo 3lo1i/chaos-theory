@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["vendors~logisticmap"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["vendors~logisticmap~lotka"],{
 
 /***/ "./node_modules/chart.js/src/chart.js":
 /*!********************************************!*\
@@ -31823,4 +31823,4 @@ module.exports = function(module) {
 /***/ })
 
 }]);
-//# sourceMappingURL=vendors~logisticmap.bundle.js.map
+//# sourceMappingURL=vendors~logisticmap~lotka.bundle.js.map

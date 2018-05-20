@@ -295,6 +295,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/src/chart.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_save_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/save-utils */ "./src/utils/save-utils.js");
 
 
 
@@ -303,16 +304,6 @@ __webpack_require__.r(__webpack_exports__);
 console.log('logisticmap module has loaded');
 
 const title = 'Логистическое отображение';
-
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.line.tension = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.line.borderWidth = 1;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.radius = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.hitRadius = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.hoverRadius = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.hover.animationDuration = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.responsiveAnimationDuration = 0;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.tooltips.enabled = false;
-chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.hover.mode = null;
 
 const maxN = 400;
 const curveN = 200;
@@ -347,6 +338,16 @@ const rmessage = (r) => {
 
 
 const init = () => {
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.line.tension = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.line.borderWidth = 1;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.radius = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.hitRadius = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.point.hoverRadius = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.hover.animationDuration = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.responsiveAnimationDuration = 0;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.tooltips.enabled = false;
+  chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.hover.mode = null;
+
   console.log('logisticmap init');
 
   const activity = jquery__WEBPACK_IMPORTED_MODULE_1___default()(_templates_logisticmap_pug__WEBPACK_IMPORTED_MODULE_0___default()());
@@ -604,55 +605,26 @@ const init = () => {
 
 
   activity.find('input[data-param]').on('input', (e) => {
-    const input = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target);
     const { param } = e.target.dataset;
+    const input = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target);
     data[param] = parseFloat(input.val());
-    jquery__WEBPACK_IMPORTED_MODULE_1___default()(`[data-bind="${ param }"]`).text(input.val());
     update();
     if (param === 'm') {
       updateBifurcation();
     }
   });
 
-  const saveImage = (filename, dataUrl) => {
-    const anchor = document.createElement('a');
-    anchor.setAttribute('href', dataUrl);
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('download', filename);
-    if (document.createEvent) {
-      const evtObj = document.createEvent('MouseEvents');
-      evtObj.initEvent('click', true, true);
-      anchor.dispatchEvent(evtObj);
-    } else if (anchor.click) {
-      anchor.click();
-    }
-  };
-
-  const saveChart = (chart, filename, width = 800, height = 800) => {
-    const oldStyle = chart.canvas.parentNode.style;
-    const oldClass = chart.canvas.parentNode.className;
-    chart.canvas.parentNode.style.width = `${width}px`;
-    chart.canvas.parentNode.style.height = `${height}px`;
-    chart.canvas.parentNode.className = '';
-    chart.resize();
-    chart.render();
-    const dataUrl = chart.toBase64Image('image/png');
-    saveImage(filename, dataUrl);
-    chart.canvas.parentNode.style = oldStyle;
-    chart.canvas.parentNode.className = oldClass;
-  };
-
   activity.find('#save-cobweb-btn').click((e) => {
-    saveChart(cobwebChart, 'cobweb.png');
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_3__["saveChart"])(cobwebChart, 'cobweb.png');
     e.preventDefault();
   });
   activity.find('#save-iterations-btn').click((e) => {
     iterationsChart.render();
-    saveChart(iterationsChart, 'iterations.png');
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_3__["saveChart"])(iterationsChart, 'iterations.png');
     e.preventDefault();
   });
   activity.find('#save-bifurcation-btn').click((e) => {
-    saveChart(bifuractionchart, 'bifurcation.png');
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_3__["saveChart"])(bifuractionchart, 'bifurcation.png');
     e.preventDefault();
   });
 
@@ -680,7 +652,26 @@ const destroy = () => {
 
 var pug = __webpack_require__(/*! ../../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["numberInput"] = pug_interp = function(variable, param_id, min, max, step, value){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+var id = `${param_id}-input`
+var target = `#${id}`
+pug_html = pug_html + "\u003Cdiv class=\"input-group input-group-plus-minus\"\u003E";
+if ((variable)) {
+pug_html = pug_html + "\u003Cdiv class=\"input-group-prepend col-2 col-md-1 pr-0\"\u003E\u003Cspan class=\"input-group-text w-100\"\u003E" + (null == (pug_interp = variable) ? "" : pug_interp) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+}
+pug_html = pug_html + "\u003Cinput" + (" class=\"form-control input-sm\""+" type=\"number\""+pug.attr("id", id, true, true)+pug.attr("name", param_id, true, true)+pug.attr("min", min, true, true)+pug.attr("max", max, true, true)+pug.attr("step", step, true, true)+pug.attr("value", value, true, true)+pug.attr("data-param", param_id, true, true)) + "\u003E\u003Cdiv class=\"input-group-append pl-0 pr-3\"\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"increment\""+pug.attr("data-step", step, true, true)) + "\u003E+\u003C\u002Fbutton\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"decrement\""+pug.attr("data-step", step, true, true)) + "\u003E-\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+};
+pug_mixins["sliderInput"] = pug_interp = function(variable, param_id, min, max, step, value){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+var id = `${param_id}-input`
+pug_html = pug_html + "\u003Cdiv class=\"input-group\"\u003E";
+if ((variable)) {
+pug_html = pug_html + "\u003Cdiv class=\"input-group-prepend col-2 col-md-1 pr-0\"\u003E\u003Cspan class=\"input-group-text w-100\"\u003E" + (null == (pug_interp = variable) ? "" : pug_interp) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+}
+pug_html = pug_html + "\u003Cdiv class=\"form-control col\"\u003E\u003Cinput" + (" class=\"form-control\""+" type=\"range\""+pug.attr("id", id, true, true)+pug.attr("name", param_id, true, true)+pug.attr("min", min, true, true)+pug.attr("max", max, true, true)+pug.attr("step", step, true, true)+pug.attr("value", value, true, true)+pug.attr("data-param", param_id, true, true)) + "\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"input-group-append col-2 col-md-1 pl-0\"\u003E\u003Cspan" + (" class=\"input-group-text w-100\""+pug.attr("data-bind", param_id, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = value) ? "" : pug_interp)) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+};
+
 
 
 
@@ -1384,18 +1375,84 @@ pug_html = pug_html + "\u003Cspan class=\"octicon\"\u003E\u003Csvg xmlns=\"http:
 
 
 
-pug_mixins["sliderInput"] = pug_interp = function(text, variable, param_id, min, max, step, value){
+pug_mixins["form-row"] = pug_interp = function(label){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
-pug_html = pug_html + "\u003Cdiv class=\"form-group row\"\u003E\u003Clabel class=\"col-md-3\"\u003E" + (pug.escape(null == (pug_interp = text) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cdiv class=\"col-md-9\"\u003E\u003Cdiv class=\"input-group row\"\u003E\u003Cdiv class=\"input-group-prepend col-1 pr-0\"\u003E\u003Cspan class=\"input-group-text w-100\"\u003E" + (null == (pug_interp = variable) ? "" : pug_interp) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"form-control col\"\u003E\u003Cinput" + (" class=\"form-control\""+" type=\"range\""+pug.attr("min", min, true, true)+pug.attr("max", max, true, true)+pug.attr("step", step, true, true)+pug.attr("value", value, true, true)+pug.attr("data-param", param_id, true, true)) + "\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"input-group-append col-1 pl-0\"\u003E\u003Cspan" + (" class=\"input-group-text w-100\""+pug.attr("data-bind", param_id, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = value) ? "" : pug_interp)) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"form-group row\"\u003E\u003Clabel class=\"col-md-3\"\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cdiv class=\"col-md-9\"\u003E";
+block && block();
+pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 };
 pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"col-12 col-lg-4\"\u003E\u003Ccanvas id=\"cobwebchart\" width=\"400\" height=\"400\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-12 col-lg-4\"\u003E\u003Ccanvas id=\"iterationschart\" width=\"400\" height=\"400\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-12 col-lg-4\"\u003E\u003Ccanvas id=\"bifuractionchart\" width=\"400\" height=\"400\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"row mb-3\"\u003E\u003Cdiv class=\"card card-body bg-light\" id=\"logistic-map-message\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cform\u003E";
-pug_mixins["sliderInput"]("Начальная численность", "x<sub>0</sub>", "a", 0, 1, 0.01, 0.5);
-pug_mixins["sliderInput"]("Скорость размножения", "r", "r", 0, 4, 0.01, 3.0);
-pug_mixins["sliderInput"]("Итерация функции", "f<sup>m</sup>", "m", 1, 4, 1, 1);
+pug_mixins["form-row"].call({
+block: function(){
+pug_mixins["sliderInput"]("x<sub>0</sub>", "a", 0, 1, 0.01, 0.5);
+}
+}, "Начальная численность");
+pug_mixins["form-row"].call({
+block: function(){
+pug_mixins["sliderInput"]("r", "r", 0, 4, 0.01, 3.0);
+}
+}, "Скорость размножения");
+pug_mixins["form-row"].call({
+block: function(){
+pug_mixins["numberInput"]("f<sup>m</sup>", "m", 1, 4, 1, 1);
+}
+}, "Итерация функции");
 pug_html = pug_html + "\u003Cdiv class=\"dropdown m-1\"\u003E\u003Cbutton class=\"btn btn-secondary dropdown-toggle\" data-toggle=\"dropdown\"\u003E";
 pug_mixins["octicon-desktop-download"]();
 pug_html = pug_html + "\nСохранить\u003C\u002Fbutton\u003E\u003Cdiv class=\"dropdown-menu\"\u003E\u003Ca class=\"dropdown-item\" id=\"save-cobweb-btn\" href=\"#\"\u003EПаутинная диаграмма\u003C\u002Fa\u003E\u003Ca class=\"dropdown-item\" id=\"save-iterations-btn\" href=\"#\"\u003EГрафик итераций\u003C\u002Fa\u003E\u003Ca class=\"dropdown-item\" id=\"save-bifurcation-btn\" href=\"#\"\u003EБифуркационная диаграмма\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fform\u003E";;return pug_html;};
 module.exports = template;
+
+/***/ }),
+
+/***/ "./src/utils/save-utils.js":
+/*!*********************************!*\
+  !*** ./src/utils/save-utils.js ***!
+  \*********************************/
+/*! exports provided: saveBlob, saveCanvas, saveImage, saveChart */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBlob", function() { return saveBlob; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveCanvas", function() { return saveCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveImage", function() { return saveImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveChart", function() { return saveChart; });
+const saveBlob = (filename, blob) => {
+  saveImage(filename, URL.createObjectURL(blob));
+};
+
+const saveCanvas = (filename, canvas) => {
+  saveImage(filename, canvas.toDataURL());
+};
+
+const saveImage = (filename, dataUrl) => {
+  const anchor = document.createElement('a');
+  anchor.setAttribute('href', dataUrl);
+  anchor.setAttribute('target', '_blank');
+  anchor.setAttribute('download', filename);
+  if (document.createEvent) {
+    const evtObj = document.createEvent('MouseEvents');
+    evtObj.initEvent('click', true, true);
+    anchor.dispatchEvent(evtObj);
+  } else if (anchor.click) {
+    anchor.click();
+  }
+};
+
+const saveChart = (chart, filename, width = 800, height = 800) => {
+  const oldStyle = chart.canvas.parentNode.style;
+  const oldClass = chart.canvas.parentNode.className;
+  chart.canvas.parentNode.style.width = `${width}px`;
+  chart.canvas.parentNode.style.height = `${height}px`;
+  chart.canvas.parentNode.className = '';
+  chart.resize();
+  chart.render();
+  const dataUrl = chart.toBase64Image('image/png');
+  saveImage(filename, dataUrl);
+  chart.canvas.parentNode.style = oldStyle;
+  chart.canvas.parentNode.className = oldClass;
+};
+
 
 /***/ })
 

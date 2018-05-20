@@ -190,6 +190,8 @@ var _presets_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/Object.a
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! svg.js */ "./node_modules/svg.js/dist/svg.js");
 /* harmony import */ var svg_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(svg_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_save_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/save-utils */ "./src/utils/save-utils.js");
+
 
 
 
@@ -303,22 +305,6 @@ const init = () => {
     updateRules();
   };
 
-  const saveAs = (blob, filename) => {
-    const anchor = document.createElement('a');
-    const dataUrl  = URL.createObjectURL(blob);
-    anchor.setAttribute('href', dataUrl);
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('download', filename);
-    if (document.createEvent) {
-      const evtObj = document.createEvent('MouseEvents');
-      evtObj.initEvent('click', true, true);
-      anchor.dispatchEvent(evtObj);
-    }
-    else if (anchor.click) {
-      anchor.click();
-    }
-  };
-
   const savePNG = (event) => {
     const data = serializeForm();
 
@@ -331,7 +317,7 @@ const init = () => {
     turtle.step = TURTLE_STEP;
     turtle.drawPath(path, pngDrawingTool);
 
-    canvas.toBlob((blob) => saveAs(blob, 'fractal.png'), 'image/png');
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_8__["saveCanvas"])('fractal.png', canvas);
     if (event) {
       event.preventDefault();
     }
@@ -350,7 +336,7 @@ const init = () => {
     turtle.drawPath(path, svgTool);
 
     const blob = new Blob([draw.svg()], {type: 'image/svg+xml'});
-    saveAs(blob, 'fractal.svg');
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_8__["saveBlob"])('fractal.svg', blob);
     if (event) {
       event.preventDefault();
     }
@@ -529,18 +515,6 @@ const init = () => {
     .find('#start-input')
     .keyup(restrictInput);
 
-  // prevent form submit on enter
-  activity
-    .find('#fractal-form')
-    .on('keydown', (e) => {
-      if (e.keyCode == 13) {
-        if (e.target.tagName === 'INPUT') {
-          jquery__WEBPACK_IMPORTED_MODULE_6___default()(e.target).change();
-        }
-        e.preventDefault();
-      }
-    });
-
   // rules successor input handler
   activity
     .find('#rules-container .rule-successor')
@@ -603,7 +577,26 @@ module.exports = [{"name":"Снежинка Коха","iterations":5,"start":"F+
 
 var pug = __webpack_require__(/*! ../../../../node_modules/pug-runtime/index.js */ "./node_modules/pug-runtime/index.js");
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["octicon-alert"] = pug_interp = function(){
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["numberInput"] = pug_interp = function(variable, param_id, min, max, step, value){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+var id = `${param_id}-input`
+var target = `#${id}`
+pug_html = pug_html + "\u003Cdiv class=\"input-group input-group-plus-minus\"\u003E";
+if ((variable)) {
+pug_html = pug_html + "\u003Cdiv class=\"input-group-prepend col-2 col-md-1 pr-0\"\u003E\u003Cspan class=\"input-group-text w-100\"\u003E" + (null == (pug_interp = variable) ? "" : pug_interp) + "\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+}
+pug_html = pug_html + "\u003Cinput" + (" class=\"form-control input-sm\""+" type=\"number\""+pug.attr("id", id, true, true)+pug.attr("name", param_id, true, true)+pug.attr("min", min, true, true)+pug.attr("max", max, true, true)+pug.attr("step", step, true, true)+pug.attr("value", value, true, true)+pug.attr("data-param", param_id, true, true)) + "\u003E\u003Cdiv class=\"input-group-append pl-0 pr-3\"\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"increment\""+pug.attr("data-step", step, true, true)) + "\u003E+\u003C\u002Fbutton\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"decrement\""+pug.attr("data-step", step, true, true)) + "\u003E-\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+};
+
+
+
+
+
+
+
+
+
+pug_mixins["octicon-alert"] = pug_interp = function(){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
 pug_html = pug_html + "\u003Cspan class=\"octicon\"\u003E\u003Csvg xmlns=\"http:\u002F\u002Fwww.w3.org\u002F2000\u002Fsvg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"\u003E\u003Cpath fill-rule=\"evenodd\" d=\"M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z\"\u002F\u003E\u003C\u002Fsvg\u003E\u003C\u002Fspan\u003E";
 };
@@ -1309,24 +1302,14 @@ pug_html = pug_html + "\u003Cspan class=\"octicon\"\u003E\u003Csvg xmlns=\"http:
 
 pug_mixins["form-row"] = pug_interp = function(label){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
-pug_html = pug_html + "\u003Cdiv class=\"form-group row\"\u003E\u003Clabel class=\"col-sm-3\"\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cdiv class=\"col-sm-9\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"form-group row\"\u003E\u003Clabel class=\"col-md-3\"\u003E" + (pug.escape(null == (pug_interp = label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003Cdiv class=\"col-md-9\"\u003E";
 block && block();
 pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-};
-pug_mixins["input-group-plus-minus"] = pug_interp = function(target, step){
-var block = (this && this.block), attributes = (this && this.attributes) || {};
-pug_html = pug_html + "\u003Cdiv class=\"input-group input-group-plus-minus\"\u003E";
-block && block();
-pug_html = pug_html + "\u003Cdiv class=\"input-group-append\"\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"increment\""+pug.attr("data-step", step, true, true)) + "\u003E+\u003C\u002Fbutton\u003E\u003Cbutton" + (" class=\"btn btn-outline-secondary\""+pug.attr("data-target", target, true, true)+" data-action=\"decrement\""+pug.attr("data-step", step, true, true)) + "\u003E-\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 };
 pug_html = pug_html + "\u003Cdiv class=\"tab-content\"\u003E\u003Cdiv class=\"tab-pane fade container show active\" id=\"activity-tab-model\"\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Ccanvas class=\"img-thumbnail\" id=\"fractal-canvas\" width=\"500\" height=\"500\"\u003EВаш браузер не поддерживает canvas.\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Cform id=\"fractal-form\"\u003E";
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["input-group-plus-minus"].call({
-block: function(){
-pug_html = pug_html + "\u003Cinput class=\"form-control input-sm\" id=\"iterations-input\" type=\"number\" name=\"iterations\" min=\"0\" max=\"15\" value=\"1\"\u003E";
-}
-}, "#iterations-input", 1);
+pug_mixins["numberInput"]('', 'iterations', 0, 15, 1, 1);
 }
 }, "Количество итераций:");
 pug_mixins["form-row"].call({
@@ -1336,7 +1319,7 @@ pug_html = pug_html + "\u003Cinput class=\"form-control input-sm\" id=\"variable
 }, "Переменные:");
 pug_mixins["form-row"].call({
 block: function(){
-pug_html = pug_html + "\u003Cdiv class=\"input-group\"\u003E\u003Cinput class=\"form-control input-sm\" id=\"constants-input\" type=\"text\" value=\"F b + - [ ]\" disabled=\"true\"\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cinput class=\"form-control input-sm\" id=\"constants-input\" type=\"text\" value=\"F b + - [ ]\" disabled=\"true\"\u003E";
 }
 }, "Константы:");
 pug_mixins["form-row"].call({
@@ -1355,11 +1338,7 @@ n++
 pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["input-group-plus-minus"].call({
-block: function(){
-pug_html = pug_html + "\u003Cinput class=\"form-control input-sm\" id=\"angle-input\" name=\"angle\" type=\"number\" min=\"0\" max=\"180\" value=\"90\"\u003E";
-}
-}, "#angle-input", 1);
+pug_mixins["numberInput"]('', 'angle', 0, 180, 1, 90);
 }
 }, "Угол поворота:");
 pug_html = pug_html + "\u003C\u002Fform\u003E\u003Cdiv class=\"alert alert-warning\" id=\"slow-alert\"\u003E";
@@ -1608,6 +1587,58 @@ class Rect {
     return fitRect;
   };
 }
+
+
+/***/ }),
+
+/***/ "./src/utils/save-utils.js":
+/*!*********************************!*\
+  !*** ./src/utils/save-utils.js ***!
+  \*********************************/
+/*! exports provided: saveBlob, saveCanvas, saveImage, saveChart */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveBlob", function() { return saveBlob; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveCanvas", function() { return saveCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveImage", function() { return saveImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveChart", function() { return saveChart; });
+const saveBlob = (filename, blob) => {
+  saveImage(filename, URL.createObjectURL(blob));
+};
+
+const saveCanvas = (filename, canvas) => {
+  saveImage(filename, canvas.toDataURL());
+};
+
+const saveImage = (filename, dataUrl) => {
+  const anchor = document.createElement('a');
+  anchor.setAttribute('href', dataUrl);
+  anchor.setAttribute('target', '_blank');
+  anchor.setAttribute('download', filename);
+  if (document.createEvent) {
+    const evtObj = document.createEvent('MouseEvents');
+    evtObj.initEvent('click', true, true);
+    anchor.dispatchEvent(evtObj);
+  } else if (anchor.click) {
+    anchor.click();
+  }
+};
+
+const saveChart = (chart, filename, width = 800, height = 800) => {
+  const oldStyle = chart.canvas.parentNode.style;
+  const oldClass = chart.canvas.parentNode.className;
+  chart.canvas.parentNode.style.width = `${width}px`;
+  chart.canvas.parentNode.style.height = `${height}px`;
+  chart.canvas.parentNode.className = '';
+  chart.resize();
+  chart.render();
+  const dataUrl = chart.toBase64Image('image/png');
+  saveImage(filename, dataUrl);
+  chart.canvas.parentNode.style = oldStyle;
+  chart.canvas.parentNode.className = oldClass;
+};
 
 
 /***/ })
