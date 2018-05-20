@@ -68,3 +68,12 @@ body > main {
 .icon-butterfly {
   background-image: url('../img/favicon-32.png');
 }
+
+
+.input-group-prepend {
+  min-width: 4rem;
+}
+
+.input-group-append {
+  min-width: 5rem;
+}
