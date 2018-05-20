@@ -1,0 +1,36 @@
+include ../../../octicons.pug
+
+mixin sliderInput(text, variable, param_id, min, max, step, value)
+  div.form-group.row
+    label.col-md-3 #{text}
+    div.col-md-9
+      div.input-group.row
+        div.input-group-prepend.col-1.pr-0
+          span.input-group-text.w-100!= variable
+        div.form-control.col
+          input.form-control(type="range", min=min, max=max, step=step, value=value, data-param=param_id)
+        div.input-group-append.col-1.pl-0
+          span.input-group-text.w-100(data-bind=param_id) #{value}
+
+div.row
+  div.col-12.col-lg-4
+    canvas#cobwebchart(width="400", height="400")
+  div.col-12.col-lg-4
+    canvas#iterationschart(width="400", height="400")
+  div.col-12.col-lg-4
+    canvas#bifuractionchart(width="400", height="400")
+div.row.mb-3
+  div.card.card-body.bg-light#logistic-map-message
+form
+  +sliderInput("Начальная численность", "x<sub>0</sub>", "a", 0, 1, 0.01, 0.5)
+  +sliderInput("Скорость размножения", "r", "r", 0, 4, 0.01, 3.0)
+  +sliderInput("Итерация функции", "f<sup>m</sup>", "m", 1, 4, 1, 1)
+  div.dropdown.m-1
+    button.btn.btn-secondary.dropdown-toggle(data-toggle="dropdown")
+      +octicon-desktop-download
+      |
+      | Сохранить
+    div.dropdown-menu
+      a#save-cobweb-btn.dropdown-item(href="#") Паутинная диаграмма
+      a#save-iterations-btn.dropdown-item(href="#") График итераций
+      a#save-bifurcation-btn.dropdown-item(href="#") Бифуркационная диаграмма

@@ -109,7 +109,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "67e93f2888dea575b581"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fa00d6305a08b3104efa"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -801,7 +801,7 @@
 /******/ 				if (__webpack_require__.nc) {
 /******/ 					script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 				}
-/******/ 				script.src = __webpack_require__.p + "" + ({"attractor":"attractor","logisticmap":"logisticmap","lotka":"lotka","vendors~lsystem":"vendors~lsystem","lsystem":"lsystem"}[chunkId]||chunkId) + ".bundle.js";
+/******/ 				script.src = __webpack_require__.p + "" + ({"attractor":"attractor","lotka":"lotka","vendors~logisticmap":"vendors~logisticmap","logisticmap":"logisticmap","vendors~lsystem":"vendors~lsystem","lsystem":"lsystem"}[chunkId]||chunkId) + ".bundle.js";
 /******/ 				var timeout = setTimeout(function(){
 /******/ 					onScriptComplete({ type: 'timeout', target: script });
 /******/ 				}, 120000);
@@ -993,7 +993,7 @@ const changeActivity = (() => {
           initActivity(activityName, activity);
         });
       } else if (activityName === 'logisticmap') {
-        __webpack_require__.e(/*! import() | logisticmap */ "logisticmap").then(__webpack_require__.bind(null, /*! ./modules/logisticmap/logisticmap */ "./src/modules/logisticmap/logisticmap.js")).then(activity => {
+        Promise.all(/*! import() | logisticmap */[__webpack_require__.e("vendors~logisticmap"), __webpack_require__.e("logisticmap")]).then(__webpack_require__.bind(null, /*! ./modules/logisticmap/logisticmap */ "./src/modules/logisticmap/logisticmap.js")).then(activity => {
           initActivity(activityName, activity);
         });
       } else if (activityName === 'lotka') {
