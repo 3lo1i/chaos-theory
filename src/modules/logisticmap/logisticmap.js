@@ -7,16 +7,6 @@ console.log('logisticmap module has loaded');
 
 const title = 'Логистическое отображение';
 
-Chart.defaults.global.elements.line.tension = 0;
-Chart.defaults.global.elements.line.borderWidth = 1;
-Chart.defaults.global.elements.point.radius = 0;
-Chart.defaults.global.elements.point.hitRadius = 0;
-Chart.defaults.global.elements.point.hoverRadius = 0;
-Chart.defaults.global.hover.animationDuration = 0;
-Chart.defaults.global.responsiveAnimationDuration = 0;
-Chart.defaults.global.tooltips.enabled = false;
-Chart.defaults.global.hover.mode = null;
-
 const maxN = 400;
 const curveN = 200;
 const data = {
@@ -50,6 +40,16 @@ const rmessage = (r) => {
 
 
 const init = () => {
+  Chart.defaults.global.elements.line.tension = 0;
+  Chart.defaults.global.elements.line.borderWidth = 1;
+  Chart.defaults.global.elements.point.radius = 0;
+  Chart.defaults.global.elements.point.hitRadius = 0;
+  Chart.defaults.global.elements.point.hoverRadius = 0;
+  Chart.defaults.global.hover.animationDuration = 0;
+  Chart.defaults.global.responsiveAnimationDuration = 0;
+  Chart.defaults.global.tooltips.enabled = false;
+  Chart.defaults.global.hover.mode = null;
+
   console.log('logisticmap init');
 
   const activity = $(template());
