@@ -4,19 +4,22 @@ div
   div.chart-container.position-relative
     canvas#lotkachart
 div.row
-  form
-    +form-row("Начальное число жертв")
-      +sliderInput("x", "prey", 0, 1, 0.01, 0.5)
-    +form-row("Начальное число хищников")
-      +sliderInput("y", "pred", 0, 1, 0.01, 0.5)
-    +form-row("Коэффициент прироста жертв")
-      +sliderInput("a", "a", 0, 1, 0.01, 0.25)
-    +form-row("Коэффициент убыли жертв")
-      +sliderInput("b", "b", 0, 1, 0.01, 0.5)
-    +form-row("Коэффициент убыли хищников")
-      +sliderInput("c", "c", 0, 1, 0.01, 0.13)
-    +form-row("Коэффициент прироста хищников")
-      +sliderInput("d", "d", 0, 1, 0.01, 0.2)
+  div.col-12.col-lg-6
+    canvas#phasechart(width=400, height=400)
+  div.col-12.col-lg-6
+    form
+      +form-row("Начальное число жертв")
+        +sliderInput("x", "prey", 0, 5, 0.01, 0.9)
+      +form-row("Начальное число хищников")
+        +sliderInput("y", "pred", 0, 5, 0.01, 1.8)
+      +form-row("Коэффициент прироста жертв")
+        +sliderInput("α", "a", 0, 5, 0.01, 0.66)
+      +form-row("Коэффициент убыли жертв")
+        +sliderInput("β", "b", 0, 5, 0.01, 1.33)
+      +form-row("Коэффициент убыли хищников")
+        +sliderInput("γ", "c", 0, 5, 0.01, 1)
+      +form-row("Коэффициент прироста хищников")
+        +sliderInput("δ", "d", 0, 5, 0.01, 1)
 div.row
   div.dropdown.m-1
     button.btn.btn-secondary.dropdown-toggle(data-toggle="dropdown")
@@ -25,3 +28,4 @@ div.row
       | Сохранить
     div.dropdown-menu
       a#save-chart-btn.dropdown-item(href="#") График популяций
+      a#save-phase-btn.dropdown-item(href="#") Фазовый портрет

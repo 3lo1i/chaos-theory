@@ -5,6 +5,7 @@ export default function init() {
     .on('input', 'input[data-param]', (e) => {
       const input = $(e.target);
       const { param } = e.target.dataset;
-      $(`[data-bind="${ param }"]`).text(input.val());
+      const value = parseFloat(input.val());
+      $(`[data-bind="${ param }"]`).text(value.toFixed(2));
     });
 };
