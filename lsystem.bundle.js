@@ -214,6 +214,7 @@ const PNG_HEIGHT = 2048;
 const SVG_WIDTH = 2048;
 const SVG_HEIGHT = 2048;
 
+let data;
 
 const init = () => {
   console.log('lsystem init');
@@ -263,7 +264,7 @@ const init = () => {
         return obj;
       }, {});
 
-    const data = {
+    data = {
       name: 'Текущие значения',
       iterations: Number(o.iterations),
       start: o.start,
@@ -537,11 +538,9 @@ const init = () => {
   }
 
   // load initial lsystem and draw it
-  {
-    const data = _presets_json__WEBPACK_IMPORTED_MODULE_5__[0];
-    deserializeForm(data);
-    makeFractal(data);
-  }
+  data = data || _presets_json__WEBPACK_IMPORTED_MODULE_5__[0];
+  deserializeForm(data);
+  makeFractal(data);
 
   return activity;
 };

@@ -86,7 +86,7 @@ const init = () => {
       const input = e.target;
       const { param } = input.dataset;
       if (param === 'iterations') {
-        data[param] = parseFloat(input.value) * 100;
+        data[param] = parseFloat(input.value) * 1000;
       } else {
         data[param] = parseFloat(input.value);
       }
@@ -96,12 +96,26 @@ const init = () => {
       console.log(Date.now() - t);
     });
 
-  drawAttractor(context, w, h, data);
-
   activity.find('#save-png-btn').click((e) => {
     Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_2__["saveCanvas"])('attractor.png', canvas[0]);
     e.preventDefault();
   });
+
+  const deserializeForm = () => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === 'iterations') {
+        value /= 1000;
+      }
+      const input = activity.find(`input[data-param=${key}]`);
+      input.val(value);
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      activity.find(`[data-bind=${key}]`).text(value.toFixed(numberOfZeroes));
+    });
+  };
+
+  deserializeForm();
+  drawAttractor(context, w, h, data);
 
   return activity;
 };
@@ -871,14 +885,14 @@ pug_mixins["sliderInput"]("b", "c", 0.1, 40.0, 0.01, 1.0);
 }, "Параметр b");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("dt", "dt", 0.00001, 0.01, 0.00001, 0.0001);
+pug_mixins["sliderInput"]("dt", "dt", 0.0001, 0.01, 0.0001, 0.0001);
 }
 }, "Время между итерациями");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("n", "iterations", 100, 5000, 1, 5000);
+pug_mixins["sliderInput"]("n", "iterations", 10, 500, 10, 500);
 }
-}, "Число итераций (x100)");
+}, "Число итераций (x1000)");
 pug_html = pug_html + "\u003C\u002Fform\u003E\u003Cdiv class=\"dropdown m-1\"\u003E\u003Cbutton class=\"btn btn-secondary dropdown-toggle\" data-toggle=\"dropdown\"\u003E";
 pug_mixins["octicon-desktop-download"]();
 pug_html = pug_html + "\nСохранить как\u003C\u002Fbutton\u003E\u003Cdiv class=\"dropdown-menu\"\u003E\u003Ca class=\"dropdown-item\" id=\"save-png-btn\" href=\"#\"\u003EPNG\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};

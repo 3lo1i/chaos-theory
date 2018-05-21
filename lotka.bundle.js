@@ -306,16 +306,27 @@ console.log('lotka module has loaded');
 const title = 'Модель Лотки — Вольтерры';
 
 const data = {
-  prey: 0.5,
-  pred: 0.5,
-  a: 0.25,
-  b: 0.5,
-  c: 0.13,
-  d: 0.2,
+  prey: 0.8,
+  pred: 0.8,
+  a: 2 / 3,
+  b: 4 / 3,
+  c: 1,
+  d: 1,
 };
 
+const seriesLength = 501;
+const dt = 0.001;
+const iterationsPerStep = 100;
 const predatorSeries = [];
 const preySeries = [];
+const phaseSeries = [];
+
+const f = (data, x, y) => {
+  const {a, b, c, d} = data;
+  const preyDelta = dt * (a * x - b * x * y);
+  const predatorDelta = dt * (c * x * y - d * y);
+  return {predatorDelta, preyDelta};
+};
 
 const init = () => {
   chart_js__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.global.elements.line.tension = 0.5;
@@ -353,7 +364,7 @@ const init = () => {
           type: 'linear',
           ticks: {
             min: 0,
-            max: 100
+            max: seriesLength - 1
           },
           scaleLabel: {
             display: true,
@@ -375,22 +386,90 @@ const init = () => {
       }
     }
   });
+  const phaseChart = new chart_js__WEBPACK_IMPORTED_MODULE_2___default.a(activity.find('#phasechart'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        data: phaseSeries,
+        fill: false,
+        borderColor: 'blue',
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Фазовый портрет',
+      },
+      scales: {
+        xAxes: [{
+          type: 'linear',
+          ticks: {
+            min: 0,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Число жертв'
+          }
+        }],
+        yAxes: [{
+          type: 'linear',
+          ticks: {
+            min: 0,
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Число хищников'
+          }
+        }]
+      },
+      animation: {
+        duration: 0,
+      },
+      legend: {
+        display: false,
+      },
+    }
+  });
 
   const updateLotkaChart = () => {
     const {pred, prey, a, b, c, d} = data;
+    console.log(data);
     let predatorNumber = pred;
     let preyNumber = prey;
-    for (let i = 0; i < 101; i++) {
-      predatorNumber = Math.max(predatorNumber, 0);
-      preyNumber = Math.max(preyNumber, 0);
+    let preatorExtinct = predatorNumber === 0;
+    let preyExtinct = preyNumber === 0;
+    for (let i = 0; i < seriesLength; i++) {
       predatorSeries[i] = {x: i, y: predatorNumber};
       preySeries[i] = {x: i, y: preyNumber};
-      let preySpeed = (a - b * predatorNumber) * preyNumber;
-      let predatorSpeed = (-c + d * preyNumber) * predatorNumber;
-      predatorNumber += predatorSpeed;
-      preyNumber += preySpeed;
+      phaseSeries[i] = {x: preyNumber, y: predatorNumber};
+      for (let j = 0; j < iterationsPerStep; j++) {
+        predatorNumber = preatorExtinct ? 0 : Math.max(predatorNumber, 0);
+        preyNumber = preyExtinct ? 0 : Math.max(preyNumber, 0);
+        preatorExtinct = predatorNumber === 0;
+        preyExtinct = preyNumber === 0;
+        const {predatorDelta, preyDelta} = f(data, preyNumber, predatorNumber);
+        predatorNumber += predatorDelta;
+        preyNumber += preyDelta;
+      }
+      if (preatorExtinct && preyExtinct) {
+        predatorSeries.length = i + 1;
+        preySeries.length = i + 1;
+        phaseSeries.length = i + 1;
+        break;
+      }
     }
+    phaseChart.update();
     lotkaChart.update();
+  };
+
+  const deserializeForm = () => {
+    Object.entries(data).forEach(([key, value]) => {
+      const input = activity.find(`input[data-param=${key}]`);
+      input.val(value);
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      activity.find(`[data-bind=${key}]`).text(value.toFixed(numberOfZeroes));
+    });
   };
 
   activity.find('input[data-param]').on('input', (e) => {
@@ -404,7 +483,12 @@ const init = () => {
     Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_3__["saveChart"])(lotkaChart, 'preadator-prey.png', 1000, 800);
     e.preventDefault();
   });
+  activity.find('#save-phase-btn').click((e) => {
+    Object(_utils_save_utils__WEBPACK_IMPORTED_MODULE_3__["saveChart"])(phaseChart, 'lotka-phase.png', 800, 800);
+    e.preventDefault();
+  });
 
+  deserializeForm();
   updateLotkaChart();
 
   return activity;
@@ -1157,40 +1241,40 @@ pug_html = pug_html + "\u003Cdiv class=\"form-group row\"\u003E\u003Clabel class
 block && block();
 pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 };
-pug_html = pug_html + "\u003Cdiv\u003E\u003Cdiv class=\"chart-container position-relative\"\u003E\u003Ccanvas id=\"lotkachart\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"row\"\u003E\u003Cform\u003E";
+pug_html = pug_html + "\u003Cdiv\u003E\u003Cdiv class=\"chart-container position-relative\"\u003E\u003Ccanvas id=\"lotkachart\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Ccanvas id=\"phasechart\" width=\"400\" height=\"400\"\u003E\u003C\u002Fcanvas\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"col-12 col-lg-6\"\u003E\u003Cform\u003E";
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("x", "prey", 0, 1, 0.01, 0.5);
+pug_mixins["sliderInput"]("x", "prey", 0, 5, 0.01, 0.9);
 }
 }, "Начальное число жертв");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("y", "pred", 0, 1, 0.01, 0.5);
+pug_mixins["sliderInput"]("y", "pred", 0, 5, 0.01, 1.8);
 }
 }, "Начальное число хищников");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("a", "a", 0, 1, 0.01, 0.25);
+pug_mixins["sliderInput"]("α", "a", 0, 5, 0.01, 0.66);
 }
 }, "Коэффициент прироста жертв");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("b", "b", 0, 1, 0.01, 0.5);
+pug_mixins["sliderInput"]("β", "b", 0, 5, 0.01, 1.33);
 }
 }, "Коэффициент убыли жертв");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("c", "c", 0, 1, 0.01, 0.13);
+pug_mixins["sliderInput"]("γ", "c", 0, 5, 0.01, 1);
 }
 }, "Коэффициент убыли хищников");
 pug_mixins["form-row"].call({
 block: function(){
-pug_mixins["sliderInput"]("d", "d", 0, 1, 0.01, 0.2);
+pug_mixins["sliderInput"]("δ", "d", 0, 5, 0.01, 1);
 }
 }, "Коэффициент прироста хищников");
-pug_html = pug_html + "\u003C\u002Fform\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"dropdown m-1\"\u003E\u003Cbutton class=\"btn btn-secondary dropdown-toggle\" data-toggle=\"dropdown\"\u003E";
+pug_html = pug_html + "\u003C\u002Fform\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"row\"\u003E\u003Cdiv class=\"dropdown m-1\"\u003E\u003Cbutton class=\"btn btn-secondary dropdown-toggle\" data-toggle=\"dropdown\"\u003E";
 pug_mixins["octicon-desktop-download"]();
-pug_html = pug_html + "\nСохранить\u003C\u002Fbutton\u003E\u003Cdiv class=\"dropdown-menu\"\u003E\u003Ca class=\"dropdown-item\" id=\"save-chart-btn\" href=\"#\"\u003EГрафик популяций\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+pug_html = pug_html + "\nСохранить\u003C\u002Fbutton\u003E\u003Cdiv class=\"dropdown-menu\"\u003E\u003Ca class=\"dropdown-item\" id=\"save-chart-btn\" href=\"#\"\u003EГрафик популяций\u003C\u002Fa\u003E\u003Ca class=\"dropdown-item\" id=\"save-phase-btn\" href=\"#\"\u003EФазовый портрет\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ }),

@@ -109,7 +109,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0768385e4cb2659c59b2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "07c7a8f32169bcba8df1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -975,7 +975,10 @@ function init() {
     .on('input', 'input[data-param]', (e) => {
       const input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
       const { param } = e.target.dataset;
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(`[data-bind="${ param }"]`).text(input.val());
+      const value = parseFloat(input.val());
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(`[data-bind="${ param }"]`).text(value.toFixed(numberOfZeroes));
     });
 };
 
