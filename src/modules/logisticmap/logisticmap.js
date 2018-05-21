@@ -330,6 +330,17 @@ const init = () => {
     e.preventDefault();
   });
 
+  const deserializeForm = () => {
+    Object.entries(data).forEach(([key, value]) => {
+      const input = activity.find(`input[data-param=${key}]`);
+      input.val(value);
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      activity.find(`[data-bind=${key}]`).text(value.toFixed(numberOfZeroes));
+    });
+  };
+
+  deserializeForm();
   updateBifurcation();
   update();
 

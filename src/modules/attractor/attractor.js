@@ -70,7 +70,7 @@ const init = () => {
       const input = e.target;
       const { param } = input.dataset;
       if (param === 'iterations') {
-        data[param] = parseFloat(input.value) * 100;
+        data[param] = parseFloat(input.value) * 1000;
       } else {
         data[param] = parseFloat(input.value);
       }
@@ -80,12 +80,26 @@ const init = () => {
       console.log(Date.now() - t);
     });
 
-  drawAttractor(context, w, h, data);
-
   activity.find('#save-png-btn').click((e) => {
     saveCanvas('attractor.png', canvas[0]);
     e.preventDefault();
   });
+
+  const deserializeForm = () => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === 'iterations') {
+        value /= 1000;
+      }
+      const input = activity.find(`input[data-param=${key}]`);
+      input.val(value);
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      activity.find(`[data-bind=${key}]`).text(value.toFixed(numberOfZeroes));
+    });
+  };
+
+  deserializeForm();
+  drawAttractor(context, w, h, data);
 
   return activity;
 };

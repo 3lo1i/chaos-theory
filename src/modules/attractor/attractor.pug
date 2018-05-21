@@ -13,9 +13,9 @@ div.row
       +form-row("Параметр b")
         +sliderInput("b", "c", 0.1, 40.0, 0.01, 1.0)
       +form-row("Время между итерациями")
-        +sliderInput("dt", "dt", 0.00001, 0.01, 0.00001, 0.0001)
-      +form-row("Число итераций (x100)")
-        +sliderInput("n", "iterations", 100, 5000, 1, 5000)
+        +sliderInput("dt", "dt", 0.0001, 0.01, 0.0001, 0.0001)
+      +form-row("Число итераций (x1000)")
+        +sliderInput("n", "iterations", 10, 500, 10, 500)
     div.dropdown.m-1
       button.btn.btn-secondary.dropdown-toggle(data-toggle="dropdown")
         +octicon-desktop-download

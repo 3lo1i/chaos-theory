@@ -6,6 +6,8 @@ export default function init() {
       const input = $(e.target);
       const { param } = e.target.dataset;
       const value = parseFloat(input.val());
-      $(`[data-bind="${ param }"]`).text(value.toFixed(2));
+      const step = parseFloat(input.attr('step'));
+      const numberOfZeroes = Math.max(Math.log10(1 / step), 0);
+      $(`[data-bind="${ param }"]`).text(value.toFixed(numberOfZeroes));
     });
 };
